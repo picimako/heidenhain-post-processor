@@ -23,10 +23,9 @@ import javafx.stage.Stage;
  */
 public final class PrimaryStageAssembler {
     private static final int DEFAULT_BOX_SPACING = 10;
-    private static final int PRIMARY_SCENE_WIDTH = 600;
+    private static final int PRIMARY_SCENE_WIDTH = 1500;
     private static final int PRIMARY_SCENE_HEIGHT = 1000;
     private final Stage primaryStage;
-    private final Map<String, String> settings;
 
     //Browser file components
     private final Label inputFileLabel = new Label("Bemeneti fájl:");
@@ -56,7 +55,6 @@ public final class PrimaryStageAssembler {
 
     public PrimaryStageAssembler(Stage primaryStage, Map<String, String> settings) {
         this.primaryStage = requireNonNull(primaryStage);
-        this.settings = settings;
         fileBeginningToggleGroupAssembler = new FileBeginningToggleGroupAssembler(settings);
         inBetweenM30PrecedingCodeAndM30ToggleGroupAssembler = new InBetweenM30PrecedingCodeAndM30ToggleGroupAssembler(settings);
     }
