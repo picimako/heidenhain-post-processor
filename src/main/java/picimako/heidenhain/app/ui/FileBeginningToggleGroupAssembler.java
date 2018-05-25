@@ -2,7 +2,6 @@ package picimako.heidenhain.app.ui;
 
 import static picimako.heidenhain.app.ui.ToggleGroupSetter.set;
 
-import java.util.List;
 import java.util.Map;
 
 import javafx.scene.control.RadioButton;
@@ -14,31 +13,28 @@ import javafx.scene.control.ToggleGroup;
  *
  * @author Tamas Balog
  */
-final class FileBeginningToggleGroupAssembler {
+final class FileBeginningToggleGroupAssembler extends AbstractToggleGroupAssembler {
 
-    private final ToggleGroup fileBeginningToggleGroup = new ToggleGroup();
-    private final Map<String, String> settings;
-    private RadioButton fileBeginningToggleOptionOne;
-    private RadioButton fileBeginningToggleOptionTwo;
-    private RadioButton fileBeginningToggleOptionThree;
+    private final ToggleGroup toggleGroup = new ToggleGroup();
+    private final RadioButton optionOne = new RadioButton();
+    private final RadioButton optionTwo = new RadioButton();
+    private final RadioButton optionThree = new RadioButton();
 
     FileBeginningToggleGroupAssembler(Map<String, String> settings) {
-        this.settings = settings;
+        super(settings);
     }
 
+    @Override
     void setupToggleGroup() {
-        fileBeginningToggleOptionOne = new RadioButton(settings.get("FAJL_ELEJE_MAKRO_1"));
-        fileBeginningToggleOptionTwo = new RadioButton(settings.get("FAJL_ELEJE_MAKRO_2"));
-        fileBeginningToggleOptionThree = new RadioButton(settings.get("FAJL_ELEJE_MAKRO_3"));
-        set(fileBeginningToggleGroup).asToggleGroupOf(fileBeginningToggleOptionOne, fileBeginningToggleOptionTwo, fileBeginningToggleOptionThree);
-        fileBeginningToggleOptionOne.setSelected(true);
+        initialize(optionOne, "FAJL_ELEJE_MAKRO_1");
+        initialize(optionTwo, "FAJL_ELEJE_MAKRO_2");
+        initialize(optionThree, "FAJL_ELEJE_MAKRO_3");
+        set(toggleGroup).asToggleGroupOf(optionOne, optionTwo, optionThree);
+        optionOne.setSelected(true);
     }
 
+    @Override
     RadioButton[] getRadioButtons() {
-        return List.of(fileBeginningToggleOptionOne, fileBeginningToggleOptionTwo, fileBeginningToggleOptionThree).toArray(new RadioButton[0]);
+        return getAsArray(optionOne, optionTwo, optionThree);
     }
-
-//    String getValueOf(String key) {
-//        return Optional.ofNullable(settings.get(key)).filter(value -> !value.isEmpty()).orElseGet(() -> "");
-//    }
 }
