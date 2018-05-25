@@ -21,16 +21,13 @@ final class SettingsFileReader {
             return Files.readAllLines(file.toPath())
                 .stream()
                 .map(s -> s.split(SETTINGS_ENTRY_DELIMITER))
-                //TODO: beautify this
-                .collect(toMap(e -> e[0], e -> {
-                    String value = EMPTY_STRING;
-                    if (e.length == 2) {
-                        value = e[1];
-                    }
-                    return value;
-                }));
+                .collect(toMap(split -> split[0], this::getRuleValue));
         } catch (Exception e) {
             throw new RuntimeException("Valami félrement a settings.properties beolvasásakor.", e);
         }
+    }
+
+    private String getRuleValue(String[] split) {
+        return split.length == 2 ? split[1] : EMPTY_STRING;
     }
 }
