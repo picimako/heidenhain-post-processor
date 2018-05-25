@@ -1,6 +1,7 @@
 package picimako.heidenhain.app.ui;
 
 import static picimako.heidenhain.app.HeidenhainFileReader.read;
+import static picimako.heidenhain.util.StringUtils.EMPTY_STRING;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,7 +11,6 @@ import javafx.scene.control.TextField;
 import picimako.heidenhain.process.PostProcessedFileBeginningConfigurer;
 import picimako.heidenhain.process.PostProcessor;
 import picimako.heidenhain.process.PostProcessorContext;
-import picimako.heidenhain.util.StringUtils;
 
 /**
  * Invokes post-processing when clicking on the post process button.
@@ -26,7 +26,8 @@ public class PostProcessButtonEventHandler implements EventHandler<ActionEvent> 
     private String withoutBracesPrepareCommandsText;
     private String m30PrecedingCodeText;
 
-    //TODO: megnézni, hogy hogy tudnám úgy a PostProcessContext-et átlökni ide, hogy az even handling-nél aktuális adatokat kapjak, és ne kell JavaFx-es component-eket mock-olni
+    //TODO: megnézni, hogy hogy tudnám úgy a PostProcessContext-et átlökni ide, hogy az even handling-nél aktuális adatokat kapjak,
+    //TODO: és ne kell JavaFx-es component-eket mock-olni
     public PostProcessButtonEventHandler(Label postProcessingDoneLabel, TextField inputFileTextField, TextField outputFileTextField) {
         this.postProcessingDoneLabel = postProcessingDoneLabel;
         this.inputFileTextField = inputFileTextField;
@@ -68,7 +69,7 @@ public class PostProcessButtonEventHandler implements EventHandler<ActionEvent> 
     }
 
     private String getMidResultFilePath() {
-        return inputFileTextField.getText().replaceFirst("\\.[hH]", StringUtils.EMPTY_STRING) + "_mid.h";
+        return inputFileTextField.getText().replaceFirst("\\.[hH]", EMPTY_STRING) + "_mid.h";
     }
 
     private void doAfterSuccessfulPostProcessing() {
