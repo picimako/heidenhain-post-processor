@@ -1,6 +1,6 @@
 package picimako.heidenhain.app;
 
-import static com.google.inject.internal.util.Preconditions.checkState;
+import static picimako.heidenhain.util.Preconditions.checkState;
 
 import java.io.File;
 import java.io.IOException;
