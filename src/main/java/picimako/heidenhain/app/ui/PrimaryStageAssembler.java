@@ -57,7 +57,7 @@ public final class PrimaryStageAssembler {
      * Assembles the primary stage.
      */
     public void assemble() {
-        primaryStage.setTitle("Heidenhain postprocessor");
+        primaryStage.setTitle("Heidenhain postprocesszor");
         postProcessButton.setDisable(true);
 
         fileBrowsingComponentsAssembler = new FileBrowsingComponentsAssembler(primaryStage, postProcessingDoneLabel, postProcessButton);
