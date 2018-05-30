@@ -23,8 +23,8 @@ import javafx.stage.Stage;
  */
 public final class PrimaryStageAssembler {
     private static final int DEFAULT_BOX_SPACING = 10;
-    private static final int PRIMARY_SCENE_WIDTH = 1500;
-    private static final int PRIMARY_SCENE_HEIGHT = 1000;
+    private static final int PRIMARY_SCENE_WIDTH = 1200;
+    private static final int PRIMARY_SCENE_HEIGHT = 900;
     private final Stage primaryStage;
 
     //Browser file components
