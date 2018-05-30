@@ -42,15 +42,15 @@ public final class PrimaryStageAssembler {
     private final Label m30PrecedingCodeTextAreaLabel = new Label("Kód az M30 parancs elé:");
     private final TextArea m30PrecedingCodeTextArea = createTextAreaWithHeight(200); //Goes right before M30.
 
-    //TODO: ezt a textarea-s injectálás előtt kell lefuttatni
-    private final FileBeginningToggleGroupAssembler fileBeginningToggleGroupAssembler;
-    //TODO: ezt meg kell nézni, hogy a mid vagy a final fájl készítésénél lenne érdemes megcsinálni
-    private final InBetweenM30PrecedingCodeAndM30ToggleGroupAssembler inBetweenM30PrecedingCodeAndM30ToggleGroupAssembler;
+    //RadioButton toggle groups
+    private final FileBeginningRadioButtonRegistry fileBeginningRadioButtonRegistry;
+    private final InBetweenM30PrecedingCodeAndM30RadioButtonRegistry inBetweenM30PrecedingCodeAndM30RadioButtonRegistry;
+
 
     public PrimaryStageAssembler(Stage primaryStage, Map<String, String> settings) {
         this.primaryStage = requireNonNull(primaryStage);
-        fileBeginningToggleGroupAssembler = new FileBeginningToggleGroupAssembler(settings);
-        inBetweenM30PrecedingCodeAndM30ToggleGroupAssembler = new InBetweenM30PrecedingCodeAndM30ToggleGroupAssembler(settings);
+        fileBeginningRadioButtonRegistry = new FileBeginningRadioButtonRegistry(settings);
+        inBetweenM30PrecedingCodeAndM30RadioButtonRegistry = new InBetweenM30PrecedingCodeAndM30RadioButtonRegistry(settings);
     }
 
     /**
