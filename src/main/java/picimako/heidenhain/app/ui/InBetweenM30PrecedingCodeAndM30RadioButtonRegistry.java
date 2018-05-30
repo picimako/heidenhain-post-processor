@@ -13,28 +13,28 @@ import javafx.scene.control.ToggleGroup;
  *
  * @author Tamas Balog
  */
-final class InBetweenM30PrecedingCodeAndM30ToggleGroupAssembler extends AbstractToggleGroupAssembler {
+final class InBetweenM30PrecedingCodeAndM30RadioButtonRegistry extends AbstractRadioButtonRegistry {
 
     private final ToggleGroup toggleGroup = new ToggleGroup();
     private final RadioButton optionOne = new RadioButton();
     private final RadioButton optionTwo = new RadioButton();
     private final RadioButton optionThree = new RadioButton();
 
-    InBetweenM30PrecedingCodeAndM30ToggleGroupAssembler(Map<String, String> settings) {
+    InBetweenM30PrecedingCodeAndM30RadioButtonRegistry(Map<String, String> settings) {
         super(settings);
     }
 
     @Override
-    void setupToggleGroup() {
+    public void setupToggleGroup() {
         initialize(optionOne, "M30_ELE_MAKRO_1");
         initialize(optionTwo, "M30_ELE_MAKRO_2");
         initialize(optionThree, "M30_ELE_MAKRO_3");
         set(toggleGroup).asToggleGroupOf(optionOne, optionTwo, optionThree);
-        optionOne.setSelected(true);
+        setFirstActiveRadioButtonSelected();
     }
 
     @Override
-    RadioButton[] getRadioButtons() {
+    public RadioButton[] getRadioButtons() {
         return getAsArray(optionOne, optionTwo, optionThree);
     }
 }
