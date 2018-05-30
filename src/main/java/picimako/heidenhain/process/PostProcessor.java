@@ -60,6 +60,7 @@ public final class PostProcessor {
                     outputContent.add(processed);
                 }
             } else {
+                //TODO: update error message according to the proper patterns
                 throw new IllegalArgumentException("The row doesn't match the expected format: " + row + "\nFormat must be [<row index> <command>].");
             }
         }

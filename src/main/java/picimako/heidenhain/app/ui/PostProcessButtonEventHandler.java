@@ -6,6 +6,7 @@ import static picimako.heidenhain.util.StringUtils.EMPTY_STRING;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import picimako.heidenhain.process.PostProcessedFileBeginningConfigurer;
@@ -22,9 +23,11 @@ public class PostProcessButtonEventHandler implements EventHandler<ActionEvent> 
     private final Label postProcessingDoneLabel;
     private final TextField inputFileTextField;
     private final TextField outputFileTextField;
-    private String inBracesCommentText;
-    private String withoutBracesPrepareCommandsText;
-    private String m30PrecedingCodeText;
+    private TextArea inBracesCommentText;
+    private TextArea withoutBracesPrepareCommandsText;
+    private TextArea m30PrecedingCodeText;
+    private FileBeginningRadioButtonRegistry fileBeginningRadioButtonRegistry;
+    private InBetweenM30PrecedingCodeAndM30RadioButtonRegistry inBetweenM30PrecedingCodeAndM30RadioButtonRegistry;
 
     //TODO: megnézni, hogy hogy tudnám úgy a PostProcessContext-et átlökni ide, hogy az even handling-nél aktuális adatokat kapjak,
     //TODO: és ne kell JavaFx-es component-eket mock-olni
@@ -40,16 +43,24 @@ public class PostProcessButtonEventHandler implements EventHandler<ActionEvent> 
         doAfterSuccessfulPostProcessing();
     }
 
-    public void setInBracesCommentText(String inBracesCommentText) {
+    public void setInBracesCommentText(TextArea inBracesCommentText) {
         this.inBracesCommentText = inBracesCommentText;
     }
 
-    public void setWithoutBracesPrepareCommandsText(String withoutBracesPrepareCommandsText) {
+    public void setWithoutBracesPrepareCommandsText(TextArea withoutBracesPrepareCommandsText) {
         this.withoutBracesPrepareCommandsText = withoutBracesPrepareCommandsText;
     }
 
-    public void setM30PrecedingCodeText(String m30PrecedingCodeText) {
+    public void setM30PrecedingCodeText(TextArea m30PrecedingCodeText) {
         this.m30PrecedingCodeText = m30PrecedingCodeText;
+    }
+
+    public void setFileBeginningRadioButtonRegistry(FileBeginningRadioButtonRegistry fileBeginningRadioButtonRegistry) {
+        this.fileBeginningRadioButtonRegistry = fileBeginningRadioButtonRegistry;
+    }
+
+    public void setInBetweenM30PrecedingCodeAndM30RadioButtonRegistry(InBetweenM30PrecedingCodeAndM30RadioButtonRegistry inBetweenM30PrecedingCodeAndM30RadioButtonRegistry) {
+        this.inBetweenM30PrecedingCodeAndM30RadioButtonRegistry = inBetweenM30PrecedingCodeAndM30RadioButtonRegistry;
     }
 
     private void executePostProcessing() {
@@ -62,9 +73,11 @@ public class PostProcessButtonEventHandler implements EventHandler<ActionEvent> 
 
     private PostProcessorContext setupPostProcessorContext() {
         PostProcessorContext context = new PostProcessorContext();
-        context.setInBracesCommentText(inBracesCommentText);
-        context.setWithoutBracesPrepareCommandsText(withoutBracesPrepareCommandsText);
-        context.setM30PrecedingCodeText(m30PrecedingCodeText);
+        context.setFileBeginningRadioButton(fileBeginningRadioButtonRegistry.getSelectedRadioButton().orElse(null));
+        context.setInBracesCommentTextArea(inBracesCommentText);
+        context.setWithoutBracesPrepareCommandsTextArea(withoutBracesPrepareCommandsText);
+        context.setM30PrecedingCodeTextArea(m30PrecedingCodeText);
+        context.setInBetweenM30PrecedingCodeAndM30RadioButton(inBetweenM30PrecedingCodeAndM30RadioButtonRegistry.getSelectedRadioButton().orElse(null));
         return context;
     }
 
