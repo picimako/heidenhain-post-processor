@@ -13,9 +13,9 @@ import java.util.regex.Pattern;
  * @author Tamas Balog
  */
 public final class PostProcessor {
-    private static final Pattern ROW_PATTERN = Pattern.compile("^\\d+ (?<command>.*)$");
     private static final Pattern ROW_WITH_OPTIONAL_ROW_INDEX_PATTERN = Pattern.compile("^(?:\\d+ )?(?<command>.*)$");
 
+    private final PrePostProcessingContextUpdater prePostProcessingContextUpdater = new PrePostProcessingContextUpdater();
     private final PostProcessedFileBeginningConfigurer fileBeginningConfigurer;
     private final PostProcessorContext context;
 
@@ -45,14 +45,16 @@ public final class PostProcessor {
 
     private List<String> doPostProcessingSecondRound(List<String> midResultFile) {
         List<String> outputContent = new LinkedList<>();
-        return postProcess(midResultFile, outputContent, ResultDependentConfiguration.get(), ROW_WITH_OPTIONAL_ROW_INDEX_PATTERN);
+        return postProcess(midResultFile, outputContent, ResultDependentConfiguration.get());
     }
 
-    //Line indexing is not relevant, doesn't effect the program execution.
-    private List<String> postProcess(List<String> file, List<String> outputContent, List<Command> config, Pattern rowPattern) {
+    /**
+     * Line indexing is not relevant, doesn't effect the program execution.
+     */
+    private List<String> postProcess(List<String> file, List<String> outputContent, List<Command> config) {
         Command command = new ChainedCommand(config);
         for (String row : file) {
-            Matcher matcher = rowPattern.matcher(row);
+            Matcher matcher = ROW_WITH_OPTIONAL_ROW_INDEX_PATTERN.matcher(row);
             if (matcher.matches()) {
                 context.setRow(matcher.group("command"));
                 String processed = command.process(context);
@@ -60,7 +62,7 @@ public final class PostProcessor {
                     outputContent.add(processed);
                 }
             } else {
-                //TODO: update error message according to the proper patterns
+                //TODO: update the error message
                 throw new IllegalArgumentException("The row doesn't match the expected format: " + row + "\nFormat must be [<row index> <command>].");
             }
         }
