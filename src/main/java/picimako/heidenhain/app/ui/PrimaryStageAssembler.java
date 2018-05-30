@@ -11,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -27,13 +26,8 @@ public final class PrimaryStageAssembler {
     private static final int PRIMARY_SCENE_HEIGHT = 900;
     private final Stage primaryStage;
 
-    //Browser file components
-    private final Label inputFileLabel = new Label("Bemeneti fájl:");
-    private final Label outputFileLabel = new Label("Átalakított fájl:");
-    private final TextField inputFileTextField = new TextField();
-    private final TextField outputFileTextField = new TextField();
-    private final Button fileBrowserButton = new Button("Tallózás...");
-    private FileBrowserButtonEventHandler fileBrowserButtonEventHandler;
+    //File browsing components
+    private FileBrowsingComponentsAssembler fileBrowsingComponentsAssembler;
 
     //Execute post-processing components
     private final Button postProcessButton = new Button("Csináld!");
@@ -66,6 +60,8 @@ public final class PrimaryStageAssembler {
         primaryStage.setTitle("Heidenhain postprocessor");
         postProcessButton.setDisable(true);
 
+        fileBrowsingComponentsAssembler = new FileBrowsingComponentsAssembler(primaryStage, postProcessingDoneLabel, postProcessButton);
+
         Scene scene = new Scene(setUpLayout(), PRIMARY_SCENE_WIDTH, PRIMARY_SCENE_HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -86,8 +82,8 @@ public final class PrimaryStageAssembler {
         vBox.setSpacing(DEFAULT_BOX_SPACING);
 
         postProcessingDoneLabel.setVisible(false);
-        add(inputFileTextField,
-            outputFileTextField,
+        add(fileBrowsingComponentsAssembler.getInputFileTextField(),
+            fileBrowsingComponentsAssembler.getOutputFileTextField(),
             postProcessingDoneLabel,
             inBracesCommentTextAreaLabel,
             inBracesCommentTextArea,
@@ -104,11 +100,13 @@ public final class PrimaryStageAssembler {
         vBox.setPadding(new Insets(17, 12, 15, 12));
         vBox.setSpacing(22);
 
-        add(inputFileLabel, outputFileLabel).to(vBox);
-        fileBeginningToggleGroupAssembler.setupToggleGroup();
-        add(fileBeginningToggleGroupAssembler.getRadioButtons()).to(vBox);
-        inBetweenM30PrecedingCodeAndM30ToggleGroupAssembler.setupToggleGroup();
-        add(inBetweenM30PrecedingCodeAndM30ToggleGroupAssembler.getRadioButtons()).to(vBox);
+        add(fileBrowsingComponentsAssembler.getInputFileLabel(),
+            fileBrowsingComponentsAssembler.getOutputFileLabel()
+        ).to(vBox);
+        fileBeginningRadioButtonRegistry.setupToggleGroup();
+        add(fileBeginningRadioButtonRegistry.getRadioButtons()).to(vBox);
+        inBetweenM30PrecedingCodeAndM30RadioButtonRegistry.setupToggleGroup();
+        add(inBetweenM30PrecedingCodeAndM30RadioButtonRegistry.getRadioButtons()).to(vBox);
         return vBox;
     }
 
@@ -117,11 +115,8 @@ public final class PrimaryStageAssembler {
         vBox.setPadding(offsets());
         vBox.setSpacing(DEFAULT_BOX_SPACING);
 
-        fileBrowserButtonEventHandler = new FileBrowserButtonEventHandler(primaryStage, postProcessingDoneLabel, postProcessButton);
-        fileBrowserButtonEventHandler.setInputFileTextField(inputFileTextField);
-        fileBrowserButtonEventHandler.setOutputFileTextField(outputFileTextField);
-        fileBrowserButton.setOnAction(fileBrowserButtonEventHandler);
-        add(fileBrowserButton).to(vBox);
+        fileBrowsingComponentsAssembler.setupEventHandler();
+        add(fileBrowsingComponentsAssembler.getFileBrowserButton()).to(vBox);
         return vBox;
     }
 
@@ -132,10 +127,14 @@ public final class PrimaryStageAssembler {
         vBox.setAlignment(Pos.CENTER);
         vBox.setStyle("-fx-background-color: #336699;");
 
-        postProcessButtonEventHandler = new PostProcessButtonEventHandler(postProcessingDoneLabel, inputFileTextField, outputFileTextField);
-        postProcessButtonEventHandler.setInBracesCommentText(inBracesCommentTextArea.getText());
-        postProcessButtonEventHandler.setWithoutBracesPrepareCommandsText(withoutBracesPrepareCommandsTextArea.getText());
-        postProcessButtonEventHandler.setM30PrecedingCodeText(m30PrecedingCodeTextArea.getText());
+        postProcessButtonEventHandler = new PostProcessButtonEventHandler(postProcessingDoneLabel,
+            fileBrowsingComponentsAssembler.getInputFileTextField(),
+            fileBrowsingComponentsAssembler.getOutputFileTextField());
+        postProcessButtonEventHandler.setInBracesCommentText(inBracesCommentTextArea);
+        postProcessButtonEventHandler.setWithoutBracesPrepareCommandsText(withoutBracesPrepareCommandsTextArea);
+        postProcessButtonEventHandler.setM30PrecedingCodeText(m30PrecedingCodeTextArea);
+        postProcessButtonEventHandler.setFileBeginningRadioButtonRegistry(fileBeginningRadioButtonRegistry);
+        postProcessButtonEventHandler.setInBetweenM30PrecedingCodeAndM30RadioButtonRegistry(inBetweenM30PrecedingCodeAndM30RadioButtonRegistry);
 
         postProcessButton.setOnAction(postProcessButtonEventHandler);
         postProcessButton.setMinWidth(100);
