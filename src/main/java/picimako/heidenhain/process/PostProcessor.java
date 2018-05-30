@@ -40,7 +40,7 @@ public final class PostProcessor {
     private List<String> doPostProcessing(List<String> file) {
         List<String> outputContent = new LinkedList<>();
         fileBeginningConfigurer.configure(outputContent);
-        return postProcess(file, outputContent, PostProcessorConfiguration.get(), ROW_PATTERN);
+        return postProcess(file, outputContent, PostProcessorConfiguration.get());
     }
 
     private List<String> doPostProcessingSecondRound(List<String> midResultFile) {
