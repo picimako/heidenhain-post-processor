@@ -39,6 +39,7 @@ public final class PostProcessor {
 
     private List<String> doPostProcessing(List<String> file) {
         List<String> outputContent = new LinkedList<>();
+        prePostProcessingContextUpdater.update(context, file);
         fileBeginningConfigurer.configure(outputContent);
         return postProcess(file, outputContent, PostProcessorConfiguration.get());
     }

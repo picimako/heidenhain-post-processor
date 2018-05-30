@@ -14,6 +14,7 @@ import picimako.heidenhain.annotation.VisibleForTesting;
  */
 public final class PostProcessorContext {
 
+    private boolean isContainToolCall;
     private boolean isPastToolCall;
     private boolean isPastLM09;
     private String row;
@@ -30,6 +31,15 @@ public final class PostProcessorContext {
     //FIXME: this might not be a good design choice having this public. Might signal a bad package structure?
     public PostProcessorContext(String row) {
         this.row = row;
+    }
+
+
+    public boolean isContainToolCall() {
+        return isContainToolCall;
+    }
+
+    public void setContainToolCall(boolean containToolCall) {
+        isContainToolCall = containToolCall;
     }
 
     public boolean isPastToolCall() {
