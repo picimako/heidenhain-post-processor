@@ -3,6 +3,7 @@ package picimako.heidenhain.process;
 import java.util.LinkedList;
 import java.util.List;
 
+import picimako.heidenhain.process.command.resultdependent.NoOpCommand;
 import picimako.heidenhain.process.command.resultdependent.M30PrecedingCodeAdderCommand;
 
 /**
@@ -19,6 +20,7 @@ final class ResultDependentConfiguration {
     static {
         List<Command> commands = new LinkedList<>();
         commands.add(new M30PrecedingCodeAdderCommand());
+        commands.add(new NoOpCommand());
 
         POST_PROCESSOR_COMMANDS = List.copyOf(commands);
     }
