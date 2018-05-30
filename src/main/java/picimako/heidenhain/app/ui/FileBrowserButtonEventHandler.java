@@ -58,6 +58,6 @@ public class FileBrowserButtonEventHandler implements EventHandler<ActionEvent> 
     }
 
     private String outputFilePath(File file) {
-        return file.getParent() + "\\" + file.getName().replaceFirst("\\.prg", "") + "_final.prg";
+        return file.getParent() + "\\" + file.getName().replaceFirst("\\.h", "") + "_final.prg";
     }
 }
