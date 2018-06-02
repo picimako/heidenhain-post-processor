@@ -1,10 +1,10 @@
-package picimako.heidenhain.process;
+package picimako.heidenhain.process.command.original;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-import picimako.heidenhain.process.command.original.M30AdderForRowsPastLM09Command;
+import picimako.heidenhain.process.PostProcessorContext;
 
 /**
  * Unit test for {@link M30AdderForRowsPastLM09Command}.

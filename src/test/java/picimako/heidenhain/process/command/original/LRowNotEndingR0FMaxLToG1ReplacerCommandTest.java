@@ -1,10 +1,10 @@
-package picimako.heidenhain.process;
+package picimako.heidenhain.process.command.original;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-import picimako.heidenhain.process.command.original.LRowNotEndingR0FMaxLToG1ReplacerCommand;
+import picimako.heidenhain.process.PostProcessorContext;
 
 /**
  * Unit test for {@link LRowNotEndingR0FMaxLToG1ReplacerCommand}.
