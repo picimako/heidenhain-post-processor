@@ -24,7 +24,7 @@ public final class LRowEndingR0FMaxToG0ReplacerCommand implements Command {
         String result = null;
         String row = context.getRow();
         if (row.startsWith(L) && row.endsWith(R0FMAX)) {
-            result = row.replaceFirst(L, EMPTY_STRING).replace(R0FMAX, G0);
+            result = row.replaceFirst(L, G0).replaceAll(R0FMAX, EMPTY_STRING);
         }
         return result;
     }

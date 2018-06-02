@@ -1,10 +1,11 @@
-package picimako.heidenhain.process;
+package picimako.heidenhain.process.command.original;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-import picimako.heidenhain.process.command.original.LRowEndingR0FMaxToG0ReplacerCommand;
+import picimako.heidenhain.process.Command;
+import picimako.heidenhain.process.PostProcessorContext;
 
 /**
  * Unit test for {@link LRowEndingR0FMaxToG0ReplacerCommand}.
@@ -19,7 +20,7 @@ class LRowEndingR0FMaxToG0ReplacerCommandTest {
     void shouldReplaceR0FMaxToG0IfRowStartsWithLAndEndsWithR0FMax() {
         PostProcessorContext context = new PostProcessorContext("LX-50,198Z59,403B-25.00C0.00R0FMAX");
 
-        assertThat(command.process(context)).isEqualTo("X-50,198Z59,403B-25.00C0.00G0");
+        assertThat(command.process(context)).isEqualTo("G0X-50,198Z59,403B-25.00C0.00");
     }
 
     @Test
